@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from app.models import Cliente, Taxa, FilaEmail
+from datetime import datetime
 
 
 def formata_email(cliente_nome, valor_total_taxas):
@@ -8,9 +9,9 @@ def formata_email(cliente_nome, valor_total_taxas):
  
 
 class Command(BaseCommand):
-    help = 'Criar clientes pra executar o teste'
 
     def handle(self, *args, **options):
+        data_inicio = datetime.now()
         import time
         inicio = time.time()        
         emails = []
@@ -23,3 +24,5 @@ class Command(BaseCommand):
         FilaEmail.objects.bulk_create(emails, batch_size=900)            
         fim = time.time()
         print('Executou em: ' + str(fim - inicio))
+        data_fim = datetime.now()
+        print('inicio em {} e terminou em {}'.format(data_inicio, data_fim))        

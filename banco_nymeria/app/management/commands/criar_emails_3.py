@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from app.models import Cliente, Taxa, FilaEmail
+from datetime import datetime
 
 
 def formata_email(cliente_nome, valor_total_taxas):
@@ -21,6 +22,7 @@ def batch_qs(qs, batch_size=1000):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        data_inicio = datetime.now()
         import time
         inicio = time.time()        
         emails = []
@@ -36,3 +38,5 @@ class Command(BaseCommand):
             emails.clear()
         fim = time.time()
         print('Executou em: ' + str(fim - inicio))
+        data_fim = datetime.now()
+        print('inicio em {} e terminou em {}'.format(str(data_inicio), str(data_fim)))      
